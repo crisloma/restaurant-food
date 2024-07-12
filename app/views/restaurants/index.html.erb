@@ -1,2 +1,53 @@
-<h1>Restaurants#index</h1>
-<p>Find me in app/views/restaurants/index.html.erb</p>
+<h1>Restaurants</h1>
+
+<%= link_to 'Nuevo', '#', class: 'btn btn-primary', data: { bs_toggle: 'modal', bs_target: '#newRestaurantModal' } %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Address</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @restaurants.each do |restaurant| %>
+      <tr>
+        <td><%= restaurant.name %></td>
+        <td><%= restaurant.address %></td>
+        <td>
+          <%= link_to edit_restaurant_path(restaurant), class: 'btn btn-warning' do %>
+            <i class="fas fa-edit"></i> Editar
+          <% end %>
+          <%= button_to restaurant_path(restaurant), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' do %>
+            <i class="fas fa-trash"></i> Eliminar
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div class="modal fade" id="newRestaurantModal" tabindex="-1" aria-labelledby="newRestaurantModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="newRestaurantModalLabel">New Restaurant</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= simple_form_for @restaurant do |f| %>
+          <%= f.input :name %>
+          <%= f.input :address %>
+          <%= f.button :submit, 'Crear', class: 'btn btn-primary' %>
+          <%= link_to 'Cerrar', '#', class: 'btn btn-secondary', data: { bs_dismiss: 'modal' } %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
